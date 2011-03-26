@@ -46,6 +46,14 @@ public class NearbyActivity extends ListActivity implements LocationListener {
         
         startGPS();
     }
+    
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        OsmPlace item = adapter.getItem(position);
+        
+        Log.i(TAG, "Touched item " + item.getName());
+    }
 
     private void startGPS() {
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
