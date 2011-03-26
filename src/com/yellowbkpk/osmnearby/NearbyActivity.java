@@ -1,5 +1,6 @@
 package com.yellowbkpk.osmnearby;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 import android.app.ListActivity;
@@ -18,6 +19,12 @@ import android.widget.TextView;
 public class NearbyActivity extends ListActivity implements LocationListener {
     private static final long ONE_MINUTE = 60 * 1000;
     private static final String TAG = NearbyActivity.class.getName();
+    private static final NumberFormat DISTANCE_FORMAT = NumberFormat.getNumberInstance();
+    static {
+        DISTANCE_FORMAT.setMaximumFractionDigits(0);
+        DISTANCE_FORMAT.setGroupingUsed(false);
+    }
+    
     private ArrayAdapter<OsmPlace> adapter;
     private Location currentBestLocation;
 
@@ -32,7 +39,9 @@ public class NearbyActivity extends ListActivity implements LocationListener {
                 
                 OsmPlace item = adapter.getItem(position);
                 TextView distView = (TextView) v.findViewById(R.id.location_list_item_distance);
-                distView.setText(item.getLoc().distanceTo(currentBestLocation) + " meters");
+                float distance = item.getLoc().distanceTo(currentBestLocation);
+                
+                distView.setText(DISTANCE_FORMAT.format(distance) + " meters");
                 
                 return v;
             }
