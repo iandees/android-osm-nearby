@@ -16,6 +16,10 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import com.yellowbkpk.osmnearby.model.Node;
+import com.yellowbkpk.osmnearby.model.Primitive;
+import com.yellowbkpk.osmnearby.model.Way;
+
 import android.location.Location;
 import android.os.AsyncTask;
 import android.util.Log;

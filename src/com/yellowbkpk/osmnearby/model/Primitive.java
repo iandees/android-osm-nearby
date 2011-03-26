@@ -1,4 +1,4 @@
-package com.yellowbkpk.osmnearby;
+package com.yellowbkpk.osmnearby.model;
 
 import java.util.HashMap;
 import java.util.Map;
