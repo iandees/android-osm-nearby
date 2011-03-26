@@ -96,7 +96,7 @@ public class GetOsmPlacesTask extends AsyncTask<Location, Void, List<OsmPlace>> 
             Node firstNode = way.getFirstNode();
             String name = way.getTag("name");
             if(name != null) {
-                OsmPlace place = new OsmPlace(name, firstNode.getLocation());
+                OsmPlace place = new OsmPlace(name, firstNode.getLocation(), way.getTags());
                 places.add(place);
             }
         }
@@ -105,7 +105,7 @@ public class GetOsmPlacesTask extends AsyncTask<Location, Void, List<OsmPlace>> 
         for(Node node : nodesColl) {
             String name = node.getTag("name");
             if(name != null) {
-                OsmPlace place = new OsmPlace(name, node.getLocation());
+                OsmPlace place = new OsmPlace(name, node.getLocation(), node.getTags());
                 places.add(place);
             }
         }

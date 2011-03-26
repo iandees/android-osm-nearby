@@ -1,5 +1,6 @@
 package com.yellowbkpk.osmnearby.model;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,4 +25,7 @@ public class Primitive {
         return this.tags.get(key);
     }
 
+    public Map<String, String> getTags() {
+        return Collections.unmodifiableMap(this.tags);
+    }
 }
