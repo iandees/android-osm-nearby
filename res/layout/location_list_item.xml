@@ -9,7 +9,8 @@
 		android:layout_width="40dp"
 		android:layout_centerVertical="true"
 		android:layout_height="40dp"
-		android:padding="3dp" />
+		android:padding="3dp"
+        android:scaleType="centerInside" />
 	<TextView
 		android:id="@+id/location_list_item_name"
 		android:layout_width="fill_parent"
