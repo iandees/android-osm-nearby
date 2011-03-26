@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<ImageView
+		android:id="@+id/place_view_icon"
+		android:layout_height="50dp"
+		android:layout_width="50dp"
+		android:layout_alignParentLeft="true"
+		android:scaleType="centerInside" />
+	<TextView
+		android:id="@+id/place_view_name"
+		android:layout_toRightOf="@+id/place_view_icon"
+		android:layout_height="wrap_content"
+		android:text="TextView"
+		android:textSize="24dp"
+		android:gravity="center"
+		android:layout_centerVertical="true"
+		android:layout_alignTop="@+id/place_view_icon"
+		android:layout_alignBottom="@+id/place_view_icon"
+		android:layout_width="fill_parent" />
+</RelativeLayout>
