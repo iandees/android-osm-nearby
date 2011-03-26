@@ -3,18 +3,20 @@ package com.yellowbkpk.osmnearby;
 import java.util.Collections;
 import java.util.Map;
 
+import com.yellowbkpk.osmnearby.model.Primitive;
+
 import android.location.Location;
 
 public class OsmPlace {
 
     private String name;
     private Location loc;
-    private Map<String, String> tags;
+    private Primitive osm;
 
-    public OsmPlace(String name, Location location, Map<String, String> tags) {
+    public OsmPlace(String name, Location location, Primitive osm) {
         this.name = name;
         this.loc = location;
-        this.tags = tags;
+        this.osm = osm;
     }
 
     public String toString() {
@@ -30,6 +32,10 @@ public class OsmPlace {
     }
 
     public Map<String, String> getTags() {
-        return Collections.unmodifiableMap(this.tags);
+        return this.osm.getTags();
+    }
+
+    public Primitive getOsmPrimitive() {
+        return osm;
     }
 }

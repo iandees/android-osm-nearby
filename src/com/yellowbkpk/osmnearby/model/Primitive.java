@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Primitive {
+public abstract class Primitive {
 
     private Map<String, String> tags = new HashMap<String, String>();
     private long id;
@@ -28,4 +28,6 @@ public class Primitive {
     public Map<String, String> getTags() {
         return Collections.unmodifiableMap(this.tags);
     }
+
+    public abstract String getKind();
 }

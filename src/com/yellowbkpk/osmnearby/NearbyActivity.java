@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -66,6 +67,12 @@ public class NearbyActivity extends ListActivity implements LocationListener {
         OsmPlace item = adapter.getItem(position);
         
         Log.i(TAG, "Touched item " + item.getName());
+        
+        Intent intent = new Intent();
+        intent.putExtra("kind", item.getOsmPrimitive().getKind());
+        intent.putExtra("id", item.getOsmPrimitive().getId());
+        intent.setClass(this, PlaceActivity.class);
+        startActivity(intent);
     }
 
     private void startGPS() {

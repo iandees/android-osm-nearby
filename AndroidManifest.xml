@@ -25,6 +25,7 @@
 					android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-
+		<activity
+			android:name=".PlaceActivity" />
 	</application>
 </manifest>

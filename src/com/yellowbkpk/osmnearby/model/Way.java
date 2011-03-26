@@ -17,4 +17,9 @@ public class Way extends Primitive {
     public Node getFirstNode() {
         return this.nodes.getFirst();
     }
+
+    @Override
+    public String getKind() {
+        return "way";
+    }
 }

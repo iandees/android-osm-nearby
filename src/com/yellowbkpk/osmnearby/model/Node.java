@@ -15,4 +15,9 @@ public class Node extends Primitive {
     public Location getLocation() {
         return this.loc;
     }
+
+    @Override
+    public String getKind() {
+        return "node";
+    }
 }
