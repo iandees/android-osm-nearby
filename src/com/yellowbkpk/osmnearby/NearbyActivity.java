@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,9 +39,12 @@ public class NearbyActivity extends ListActivity implements LocationListener {
                 View v = super.getView(position, convertView, parent);
                 
                 OsmPlace item = adapter.getItem(position);
+                
+                ImageView iconView = (ImageView) v.findViewById(R.id.location_list_item_icon);
+                iconView.setImageResource(IconLookup.forTags(item.getTags()));
+                
                 TextView distView = (TextView) v.findViewById(R.id.location_list_item_distance);
                 float distance = item.getLoc().distanceTo(currentBestLocation);
-                
                 distView.setText(DISTANCE_FORMAT.format(distance) + " meters");
                 
                 return v;
