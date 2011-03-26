@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:orientation="vertical">
+	<ImageView
+		android:src="@drawable/icon"
+		android:layout_width="wrap_content"
+		android:id="@+id/location_list_item_icon"
+		android:layout_height="fill_parent" />
 	<TextView
 		android:id="@+id/location_list_item_name"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
+		android:layout_toRightOf="@+id/location_list_item_icon"
 		android:textSize="18dp"
 		android:text="Foo Bar Foo Bar Foo Bar" />
 	<TextView
 		android:layout_height="wrap_content"
-		android:text="TextView"
 		android:layout_width="fill_parent"
+		android:text="TextView"
 		android:layout_gravity="right"
+        android:layout_toRightOf="@+id/location_list_item_icon"
+        android:layout_below="@+id/location_list_item_name"
 		android:id="@+id/location_list_item_distance" />
-</LinearLayout>
+</RelativeLayout>
