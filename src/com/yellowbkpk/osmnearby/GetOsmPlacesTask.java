@@ -8,90 +8,45 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import com.yellowbkpk.osmnearby.model.Node;
-import com.yellowbkpk.osmnearby.model.Primitive;
-import com.yellowbkpk.osmnearby.model.Way;
 
 import android.location.Location;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.yellowbkpk.osmnearby.model.Node;
+import com.yellowbkpk.osmnearby.model.OsmData;
+import com.yellowbkpk.osmnearby.model.Way;
 
 public class GetOsmPlacesTask extends AsyncTask<Location, Void, List<OsmPlace>> {
 
     private static final double BUFFER = 0.007;
     private static final String TAG = GetOsmPlacesTask.class.getName();
     private static final DistanceComparator distanceComparator = new DistanceComparator();
-    private Map<Long, Node> nodes = new HashMap<Long, Node>();
-    private Map<Long, Way> ways = new HashMap<Long, Way>();
-    private Primitive currentPrim;
 
     @Override
     protected List<OsmPlace> doInBackground(Location... params) {
+        OsmData data = null;
         try {
             URL u = new URL("http://jxapi.openstreetmap.org/xapi/api/0.6/*[amenity|leisure|tourism=*][bbox="
                     + buildBbox(params[0]) + "]");
             URLConnection connection = u.openConnection();
             InputStream inputStream = connection.getInputStream();
 
-            XmlPullParser pullParser = XmlPullParserFactory.newInstance().newPullParser();
-            pullParser.setInput(inputStream, "UTF-8");
-            int eventType = pullParser.getEventType();
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                String name = pullParser.getName();
-                if (eventType == XmlPullParser.START_DOCUMENT) {
-                } else if (eventType == XmlPullParser.START_TAG) {
-                    if ("tag".equals(name)) {
-                        String key = pullParser.getAttributeValue(null, "k");
-                        String val = pullParser.getAttributeValue(null, "v");
-                        currentPrim.setTag(key, val);
-                    } else if ("node".equals(name)) {
-                        long id = Long.parseLong(pullParser.getAttributeValue(null, "id"));
-                        Location latlon = new Location("myself");
-                        double lat = Double.parseDouble(pullParser.getAttributeValue(null, "lat"));
-                        latlon.setLatitude(lat);
-                        double lon = Double.parseDouble(pullParser.getAttributeValue(null, "lon"));
-                        latlon.setLongitude(lon);
-                        currentPrim = new Node(id, latlon);
-                    } else if ("nd".equals(name)) {
-                        String ndIdStr = pullParser.getAttributeValue(null, "ref");
-                        Long ndId = Long.parseLong(ndIdStr);
-                        ((Way) currentPrim).addNode(nodes.get(ndId));
-                    } else if ("way".equals(name)) {
-                        long id = Long.parseLong(pullParser.getAttributeValue(null, "id"));
-                        currentPrim = new Way(id);
-                    }
-                } else if (eventType == XmlPullParser.END_TAG) {
-                    if ("node".equals(name)) {
-                        nodes.put(currentPrim.getId(), (Node) currentPrim);
-                    } else if("way".equals(name)) {
-                        ways.put(currentPrim.getId(), (Way) currentPrim);
-                    }
-                } else if (eventType == XmlPullParser.TEXT) {
-                }
-                eventType = pullParser.next();
-            }
+            OsmParser parser = new OsmParser();
+            data = parser.parse(inputStream);
 
             inputStream.close();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
         }
         
-        Log.i(TAG, "Found " + nodes.size() + " nodes and " + ways.size() + " ways.");
+        Log.i(TAG, "Found " + data.getNodes().size() + " nodes and " + data.getWays().size() + " ways.");
         
-        List<OsmPlace> places = new ArrayList<OsmPlace>(ways.size());
-        Collection<Way> waysColl = ways.values();
+        List<OsmPlace> places = new ArrayList<OsmPlace>(data.getWays().size());
+        Collection<Way> waysColl = data.getWays().values();
         for (Way way : waysColl) {
             Node firstNode = way.getFirstNode();
             String name = way.getTag("name");
@@ -101,7 +56,7 @@ public class GetOsmPlacesTask extends AsyncTask<Location, Void, List<OsmPlace>> 
             }
         }
         
-        Collection<Node> nodesColl = nodes.values();
+        Collection<Node> nodesColl = data.getNodes().values();
         for(Node node : nodesColl) {
             String name = node.getTag("name");
             if(name != null) {
