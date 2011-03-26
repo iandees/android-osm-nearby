@@ -6,9 +6,11 @@
 	android:orientation="vertical">
 	<ImageView
 		android:src="@drawable/icon"
-		android:layout_width="wrap_content"
+		android:layout_width="40dp"
 		android:id="@+id/location_list_item_icon"
-		android:layout_height="fill_parent" />
+		android:layout_centerVertical="true"
+		android:layout_height="40dp"
+		android:padding="3dp" />
 	<TextView
 		android:id="@+id/location_list_item_name"
 		android:layout_width="fill_parent"
