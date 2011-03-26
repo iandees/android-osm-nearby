@@ -36,7 +36,7 @@ public class GetOsmPlacesTask extends AsyncTask<Location, Void, List<OsmPlace>> 
     @Override
     protected List<OsmPlace> doInBackground(Location... params) {
         try {
-            URL u = new URL("http://jxapi.openstreetmap.org/xapi/api/0.6/*[amenity|leisure=*][bbox="
+            URL u = new URL("http://jxapi.openstreetmap.org/xapi/api/0.6/*[amenity|leisure|tourism=*][bbox="
                     + buildBbox(params[0]) + "]");
             URLConnection connection = u.openConnection();
             InputStream inputStream = connection.getInputStream();
