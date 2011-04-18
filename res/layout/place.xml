@@ -10,11 +10,75 @@
 		android:layout_width="50dp"
 		android:layout_alignParentLeft="true"
 		android:scaleType="centerInside" />
+	<ScrollView
+		android:layout_height="fill_parent"
+		android:layout_width="fill_parent"
+		android:id="@+id/scrollView1"
+		android:layout_below="@+id/place_view_icon"
+		android:layout_alignLeft="@+id/place_view_icon"
+		android:layout_alignParentRight="true">
+		<TableLayout
+			android:id="@+id/linearLayout1"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:gravity="center_horizontal"
+			android:stretchColumns="1">
+			<TableRow
+				android:visibility="gone">
+				<TextView
+					android:id="@+id/addressLabel"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignBaseline="@+id/addressTextButton"
+					android:text="Address:" />
+				<Button
+					android:id="@+id/addressTextButton"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/addressLabel"
+					android:gravity="fill_horizontal"
+					android:text="-"
+					android:layout_width="fill_parent" />
+			</TableRow>
+
+			<TableRow>
+				<TextView
+					android:id="@+id/phoneLabel"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignBaseline="@+id/phoneTextButton"
+					android:layout_below="@+id/addressLabel"
+					android:text="Phone:" />
+				<Button
+					android:id="@+id/phoneTextButton"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/phoneLabel"
+					android:gravity="fill_horizontal"
+					android:text="-"
+					android:layout_width="fill_parent" />
+			</TableRow>
+
+			<TableRow>
+				<TextView
+					android:id="@+id/openingHoursLabel"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignBaseline="@+id/openingHoursButton"
+					android:layout_below="@+id/phoneLabel"
+					android:text="Opening Hours:" />
+				<Button
+					android:id="@+id/openingHoursTextButton"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@+id/openingHoursLabel"
+					android:gravity="fill_horizontal"
+					android:text="-"
+					android:layout_width="fill_parent" />
+			</TableRow>
+		</TableLayout>
+	</ScrollView>
 	<TextView
 		android:id="@+id/place_view_name"
 		android:layout_toRightOf="@+id/place_view_icon"
-		android:layout_height="wrap_content"
-		android:text="TextView"
+		android:layout_height="60dp"
 		android:textSize="24dp"
 		android:gravity="center"
 		android:layout_centerVertical="true"

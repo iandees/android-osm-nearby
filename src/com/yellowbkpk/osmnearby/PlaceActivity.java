@@ -6,6 +6,8 @@ import com.yellowbkpk.osmnearby.model.Primitive;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,13 +17,13 @@ public class PlaceActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         Bundle extras = getIntent().getExtras();
         String kind = extras.getString("kind");
         Long id = extras.getLong("id");
-        
+
         setContentView(R.layout.place);
-        
+
         new OsmPrimitiveGetTask(kind) {
             private ProgressDialog dialog;
 
@@ -34,14 +36,14 @@ public class PlaceActivity extends Activity {
             protected void onPostExecute(OsmData result) {
                 selectedPrimitive = findPrimitive(result);
                 updateUI(result);
-                
+
                 dialog.dismiss();
             }
         }.execute(id);
     }
 
     private Primitive findPrimitive(OsmData result) {
-        if(result.getWays().size() > 0) {
+        if (result.getWays().size() > 0) {
             return result.getWays().values().iterator().next();
         } else {
             return result.getNodes().values().iterator().next();
@@ -54,6 +56,21 @@ public class PlaceActivity extends Activity {
 
         TextView nameView = (TextView) findViewById(R.id.place_view_name);
         nameView.setText(selectedPrimitive.getTag("name"));
+
+        if (selectedPrimitive.getTag("addr:full") != null) {
+            Button addrButton = (Button) findViewById(R.id.addressTextButton);
+            addrButton.setText(selectedPrimitive.getTag("addr:full"));
+        }
+
+        if (selectedPrimitive.getTag("phone") != null) {
+            Button phoneButton = (Button) findViewById(R.id.phoneTextButton);
+            phoneButton.setText(selectedPrimitive.getTag("phone"));
+        }
+
+        if (selectedPrimitive.getTag("opening_hours") != null) {
+            Button openHoursButton = (Button) findViewById(R.id.openingHoursTextButton);
+            openHoursButton.setText(selectedPrimitive.getTag("opening_hours"));
+        }
     }
 
 }
