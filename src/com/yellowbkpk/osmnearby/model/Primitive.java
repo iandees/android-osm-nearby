@@ -6,11 +6,16 @@ import java.util.Map;
 
 public abstract class Primitive {
 
-    private Map<String, String> tags = new HashMap<String, String>();
-    private long id;
+    private final Map<String, String> tags;
+    private final long id;
 
-    public Primitive(long id) {
+    public Primitive(long id, Map<String, String> tags) {
         this.id = id;
+        this.tags = tags;
+    }
+    
+    public Primitive(long id) {
+        this(id, new HashMap<String, String>());
     }
 
     public void setTag(String key, String val) {
