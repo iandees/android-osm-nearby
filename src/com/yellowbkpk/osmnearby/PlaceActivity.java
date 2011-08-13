@@ -1,5 +1,8 @@
 package com.yellowbkpk.osmnearby;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -60,16 +63,8 @@ public class PlaceActivity extends Activity {
         
         TableLayout container = (TableLayout) findViewById(R.id.attribute_table);
         
-        if (selectedPrimitive.getTag("addr:full") != null) {
-            container.addView(createAttributeRow("Address:", selectedPrimitive.getTag("addr:full")));
-        }
-
-        if (selectedPrimitive.getTag("phone") != null) {
-            container.addView(createAttributeRow("Phone:", selectedPrimitive.getTag("phone")));
-        }
-
-        if (selectedPrimitive.getTag("opening_hours") != null) {
-            container.addView(createAttributeRow("Hours:", selectedPrimitive.getTag("opening_hours")));
+        for (Entry<String, String> tag : selectedPrimitive.getTags().entrySet()) {
+            container.addView(createAttributeRow(tag.getKey(), tag.getValue()));
         }
 
     }
@@ -81,7 +76,11 @@ public class PlaceActivity extends Activity {
         labelView.setText(label);
         
         Button buttonView = (Button) row.findViewById(R.id.attribute_text_button);
-        buttonView.setText(value);
+        if (value == null) {
+            buttonView.setText("Not Set Yet");
+        } else {
+            buttonView.setText(value);
+        }
         
         return row;
     }
