@@ -1,15 +1,16 @@
 package com.yellowbkpk.osmnearby;
 
-import com.yellowbkpk.osmnearby.model.OsmData;
-import com.yellowbkpk.osmnearby.model.Primitive;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.yellowbkpk.osmnearby.model.OsmData;
+import com.yellowbkpk.osmnearby.model.Primitive;
 
 public class PlaceActivity extends Activity {
     private Primitive selectedPrimitive;
@@ -56,21 +57,33 @@ public class PlaceActivity extends Activity {
 
         TextView nameView = (TextView) findViewById(R.id.place_view_name);
         nameView.setText(selectedPrimitive.getTag("name"));
-
+        
+        TableLayout container = (TableLayout) findViewById(R.id.attribute_table);
+        
         if (selectedPrimitive.getTag("addr:full") != null) {
-            Button addrButton = (Button) findViewById(R.id.addressTextButton);
-            addrButton.setText(selectedPrimitive.getTag("addr:full"));
+            container.addView(createAttributeRow("Address:", selectedPrimitive.getTag("addr:full")));
         }
 
         if (selectedPrimitive.getTag("phone") != null) {
-            Button phoneButton = (Button) findViewById(R.id.phoneTextButton);
-            phoneButton.setText(selectedPrimitive.getTag("phone"));
+            container.addView(createAttributeRow("Phone:", selectedPrimitive.getTag("phone")));
         }
 
         if (selectedPrimitive.getTag("opening_hours") != null) {
-            Button openHoursButton = (Button) findViewById(R.id.openingHoursTextButton);
-            openHoursButton.setText(selectedPrimitive.getTag("opening_hours"));
+            container.addView(createAttributeRow("Hours:", selectedPrimitive.getTag("opening_hours")));
         }
+
+    }
+
+    private TableRow createAttributeRow(String label, String value) {
+        TableRow row = (TableRow) getLayoutInflater().inflate(R.layout.place_attribute_row, null);
+        
+        TextView labelView = (TextView) row.findViewById(R.id.attribute_label);
+        labelView.setText(label);
+        
+        Button buttonView = (Button) row.findViewById(R.id.attribute_text_button);
+        buttonView.setText(value);
+        
+        return row;
     }
 
 }

@@ -18,60 +18,11 @@
 		android:layout_alignLeft="@+id/place_view_icon"
 		android:layout_alignParentRight="true">
 		<TableLayout
-			android:id="@+id/linearLayout1"
+			android:id="@+id/attribute_table"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:gravity="center_horizontal"
 			android:stretchColumns="1">
-			<TableRow>
-				<TextView
-					android:id="@+id/addressLabel"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_alignBaseline="@+id/addressTextButton"
-					android:text="Address:" />
-				<Button
-					android:id="@+id/addressTextButton"
-					android:layout_height="wrap_content"
-					android:layout_toRightOf="@+id/addressLabel"
-					android:gravity="fill_horizontal"
-					android:text="Not Set Yet"
-					android:layout_width="fill_parent" />
-			</TableRow>
-
-			<TableRow>
-				<TextView
-					android:id="@+id/phoneLabel"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_alignBaseline="@+id/phoneTextButton"
-					android:layout_below="@+id/addressLabel"
-					android:text="Phone:" />
-				<Button
-					android:id="@+id/phoneTextButton"
-					android:layout_height="wrap_content"
-					android:layout_toRightOf="@+id/phoneLabel"
-					android:gravity="fill_horizontal"
-					android:text="Not Set Yet"
-					android:layout_width="fill_parent" />
-			</TableRow>
-
-			<TableRow>
-				<TextView
-					android:id="@+id/openingHoursLabel"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_alignBaseline="@+id/openingHoursButton"
-					android:layout_below="@+id/phoneLabel"
-					android:text="Opening Hours:" />
-				<Button
-					android:id="@+id/openingHoursTextButton"
-					android:layout_height="wrap_content"
-					android:layout_toRightOf="@+id/openingHoursLabel"
-					android:gravity="fill_horizontal"
-					android:text="Not Set Yet"
-					android:layout_width="fill_parent" />
-			</TableRow>
 		</TableLayout>
 	</ScrollView>
 	<TextView
