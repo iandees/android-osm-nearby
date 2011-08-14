@@ -1,12 +1,16 @@
 package com.yellowbkpk.osmnearby;
 
-import java.util.Map;
 import java.util.Map.Entry;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -17,6 +21,50 @@ import com.yellowbkpk.osmnearby.model.Primitive;
 
 public class PlaceActivity extends Activity {
     private Primitive selectedPrimitive;
+    
+    private OnClickListener addTagListener = new AddTagListener();
+    private OnClickListener editTagListener = new EditTagListener();
+    
+    private class AddTagListener implements OnClickListener {
+        @Override
+        public void onClick(View v) {
+            View editView = getLayoutInflater().inflate(R.layout.dialog_add_tag, null);
+            
+            final EditText keyView = (EditText) editView.findViewById(R.id.key_view);
+            
+            final EditText valueView = (EditText) editView.findViewById(R.id.value_view);
+
+            new AlertDialog.Builder(PlaceActivity.this).setView(editView).setTitle("Add New Tag")
+                    .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            selectedPrimitive.setTag(keyView.getText().toString(), valueView.getText().toString());
+                            dialog.dismiss();
+                        }
+                    }).show();
+        }
+    }
+    
+    private class EditTagListener implements OnClickListener {
+        @Override
+        public void onClick(View v) {
+            final Entry<String, String> tag = (Entry<String, String>) v.getTag();
+
+            View editView = getLayoutInflater().inflate(R.layout.dialog_edit_tag, null);
+            
+            final EditText valueView = (EditText) editView.findViewById(R.id.value_view);
+            valueView.setText(tag.getValue());
+
+            new AlertDialog.Builder(PlaceActivity.this).setView(editView).setTitle("Edit tag \"" + tag.getKey() + "\"")
+                    .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            selectedPrimitive.setTag(tag.getKey(), valueView.getText().toString());
+                            dialog.dismiss();
+                        }
+                    }).show();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,22 +112,29 @@ public class PlaceActivity extends Activity {
         TableLayout container = (TableLayout) findViewById(R.id.attribute_table);
         
         for (Entry<String, String> tag : selectedPrimitive.getTags().entrySet()) {
-            container.addView(createAttributeRow(tag.getKey(), tag.getValue()));
+            TableRow view = createAttributeRow(tag);
+            container.addView(view);
         }
+        container.addView(createAttributeRow(null));
 
     }
 
-    private TableRow createAttributeRow(String label, String value) {
+    private TableRow createAttributeRow(Entry<String,String> tag) {
         TableRow row = (TableRow) getLayoutInflater().inflate(R.layout.place_attribute_row, null);
         
-        TextView labelView = (TextView) row.findViewById(R.id.attribute_label);
-        labelView.setText(label);
-        
         Button buttonView = (Button) row.findViewById(R.id.attribute_text_button);
-        if (value == null) {
+        TextView labelView = (TextView) row.findViewById(R.id.attribute_label);
+        
+        if (tag == null) {
+            labelView.setText("<New Tag>");
             buttonView.setText("Not Set Yet");
+            buttonView.setOnClickListener(addTagListener);
         } else {
-            buttonView.setText(value);
+            labelView.setText(tag.getKey());
+            
+            buttonView.setText(tag.getValue());
+            buttonView.setOnClickListener(editTagListener);
+            buttonView.setTag(tag);
         }
         
         return row;

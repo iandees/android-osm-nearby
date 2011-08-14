@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:baselineAligned="false"
+	android:orientation="horizontal">
+	<EditText
+		android:id="@+id/key_view"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="2" />
+	<EditText
+		android:id="@+id/value_view"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@+id/key_view"
+		android:gravity="fill_horizontal"
+		android:layout_weight="1" />
+</LinearLayout>
